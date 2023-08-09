@@ -2,7 +2,7 @@
 powershell一句话上线便捷生成器。使用powershell远程获取shellcode，并由RC4解密后内存加载。支持32位shellcode和64位shellcode。
 
 # 使用场景
-需要以文件不落地的方式加载自己的shellcode时。
+需要以文件不落地的方式或一行cmd命令加载自己的shellcode时。
 
 # 食用教程
 ```
