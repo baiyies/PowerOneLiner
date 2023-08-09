@@ -1,7 +1,7 @@
 # PowerOneLiner
 [中文][url-doczh]
 
-PowerShell one-liner reverse shell generator. Utilizes PowerShell to remotely fetch shellcode and loads it into memory after decryption with RC4. Supports both 32-bit and 64-bit shellcode.
+PowerShell one-liner remote shellcode generator. Utilizes PowerShell to remotely fetch shellcode and loads it into memory after decryption with RC4. Supports both 32-bit and 64-bit shellcode.
 
 # Use case
 Loading your own shellcode in a non-persistent manner without writing to disk.
